@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title></title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h3>{{msg}}</h3>
+    <br><br><br>
+    <div>
+        <p>页面将在<span>5</span>秒后跳转到首页</p>
+    </div>
+    <hr>
+    <a href="/admin/index">点击跳转到首页</a>
+
+    <script>
+        let num = 5;
+        let timer = setInterval(() => {
+            if (num == 1) {
+                window.location.href = '/admin/index'
+            }
+            num--
+            document.querySelector('span').innerText = num
+        }, 1000);
+    </script>
+</body>
+
+</html>
