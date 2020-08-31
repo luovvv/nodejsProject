@@ -14,7 +14,7 @@ module.exports = new Schema({
     nickname: {
         required: true,
         type: String,
-        minlength: 2
+        minlength: 2,
     },
     telnum: {
         required: true,

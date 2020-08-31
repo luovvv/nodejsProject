@@ -15,9 +15,10 @@ const timer = require('../middleware/data')
 module.exports = {
     // 登录后
     async login(req, res, next) {
-        // console.log(req.session);
         // 每一次登录都要检查一下是否有限制
-        if (req.session.limit === 1) {
+        console.log(req.session.limit, req.session.username);
+        console.log(req.cookies);
+        if (req.session.limit == 1 && req.session.username == req.body.username) {
             //用户名已错误登录三次 跳转到提示页
             return res.render('home/toLogin', { msg: "您的密码已错误三次，请在24小时后重新登录" })
         }
@@ -27,15 +28,14 @@ module.exports = {
         if (result) {
             // 登录成功 将logcount置为0
             console.log(req.body.username);
-            userModel.updateCount(req.body.username)
-
+            let a = await userModel.updateCount(req.body.username)
+            console.log(a);
             // // 存入cookie
             res.cookie('username', result.username, { maxAge: 20 * 60 * 1000 })
             res.cookie('nickname', result.nickname, { maxAge: 20 * 60 * 1000 })
-                // req.session.username = result.username;
-                // req.session.nickname = result.nickname
 
-
+            // req.session.username = result.username;
+            // req.session.nickname = result.nickname
             // 记录日志：
             logModel.addLog({
                     logUsername: result.username,
@@ -46,8 +46,6 @@ module.exports = {
                 })
                 // 不为空 读取到数据，跳转到msg页面
             return res.render('home/msg', { msg: '登陆成功' })
-
-
         } else {
             // 登录失败
             let failResult = await userModel.checkUsername(req.body.username)
@@ -55,8 +53,10 @@ module.exports = {
                 // 判断是否有用户名  用户名存在 而密码错误.
                 if (failResult.logCount === 3) {
                     // 设置session 有效时间为24小时
-                    req.session.username = failResult.username;
-                    req.session.limit = 1;
+                    req.session['username'] = failResult.username;
+                    req.session['limit'] = 1;
+                    console.log(req.session.limit, req.session.username);
+
                 } else {
                     //  用户登录密码错误小于三次  让logCount自增1 继续登录
                     let dd = await userModel.model.updateOne({ 'username': failResult.username }, { $inc: { 'logCount': 1 } })
@@ -81,7 +81,8 @@ module.exports = {
     },
 
 
-    // 判断用户是否登录 本地有无session
+
+    // 判断用户是否登录 本地有无cookie
     isLog(req, res, next) {
         // 需要同时存在username和nick才是登录状态
         if (req.cookies.username == 'j:null' && req.cookies.nickname == 'j:null') {

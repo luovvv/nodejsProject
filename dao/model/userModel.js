@@ -44,7 +44,7 @@ class userModle {
 
     // 置零logCount
     updateCount(username) {
-        return this.model.updateOne({ username }, { $set: { "logCount": '0' } })
+        return this.model.updateMany({ username }, { $set: { "logCount": 0 } })
     }
 
 }

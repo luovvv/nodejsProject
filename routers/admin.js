@@ -34,6 +34,22 @@ router.get('/index', (req, res) => {
     res.render('home/index', { nickname: req.session.nick })
 })
 
+// 欢迎页面
+router.get('/welcome', (req, res) => {
+    res.render('home/welcome')
+})
+
+
+// 添加热映页面
+router.get('/addHot', (req, res) => {
+    res.render('home/addMovie')
+})
+
+// 添加热映页面
+router.get('/adminHot', (req, res) => {
+    res.render('home/hotAdmin')
+})
+
 // 退出登录
 router.get('/logout', LoginController.logOut)
 

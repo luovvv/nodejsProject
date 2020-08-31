@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 表单验证 jQuery Validation</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description" content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="hot/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="hot/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="hot/css/animate.css" rel="stylesheet">
+    <link href="hot/css/style.css?v=4.1.0" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>热映添加</h5>
+
+                    </div>
+                    <div class="ibox-content">
+                        <form class="form-horizontal m-t" id="hotForm">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">海报图片</label>
+                                <div class="col-sm-8 input-group">
+                                    <input id="firstname" name="pic" class="form-control" type="file">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 请上传png|jpg|gif类型图片</span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">影片名称：</label>
+                                <div class="col-sm-8 input-group">
+                                    <input id="lastname" name="name" class="form-control" type="text" aria-required="true" aria-invalid="false" class="valid">
+                                    <span class="help-block m-b-none"><i class="fa fa-info-circle"></i>  影片名称不能为空</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">热度：</label>
+                                <div class="col-sm-8 input-group">
+                                    <input name="hotPoint" class="form-control" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group" id="data_1">
+                                <label class="col-sm-3 control-label ">上映日期：</label>
+                                <div class="input-group date col-sm-8 ">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" class="form-control" value="2014-11-11" name="data">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">演员：</label>
+                                <div class="col-sm-8 input-group">
+                                    <input id="email" name="actor" class="form-control" type="email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-3 ">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" class="checkbox" id="agree" name="agree"> 我已经认真阅读并同意《H+使用协议》
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-8 col-sm-offset-3">
+                                    <button class="btn btn-primary" type="submit">添加影片</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- 全局js -->
+    <script src="hot/js/jquery.min.js?v=2.1.4"></script>
+    <script src="hot/js/bootstrap.min.js?v=3.3.6"></script>
+
+    <!-- 自定义js -->
+    <script src="hot/js/content.js?v=1.0.0"></script>
+
+    <!-- jQuery Validation plugin javascript-->
+    <script src="hot/js/plugins/validate/jquery.validate.min.js"></script>
+    <!-- jquery validata汉化包 -->
+    <script src="hot/js/plugins/validate/messages_zh.min.js"></script>
+
+    <!-- <script src="hot/js/demo/form-validate-demo.js"></script> -->
+    <!-- data js -->
+    <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+
+
+    <script>
+        // pic name hotPoint data actor
+        // jquery validate的验证语法
+        $('#hotForm').validate({
+            rules: {
+                name: {
+                    // name表单必填
+                    required: true,
+                    minlength: 2
+                },
+                hotPoint: {
+                    required: true,
+                    // min: 1,
+                    // max: 10,
+                    //  最大值10，最小值1，是电话号码
+                    isphone: true,
+                    // number: true
+                },
+                data: {
+                    required: true
+                }
+            },
+            messages: {
+                name: {
+                    required: '不能为空，必须填写影片名',
+                    minlength: '用户名必需由两个字符组成'
+                },
+
+
+                hotPoint: {
+                    required: '请输入热点值',
+                    isphone: "请输入有效的数字",
+                }
+
+            },
+            submitHandler: function(form) {
+                /*  修改form的默认提交方式，可以指定ajax请求
+                 form.submit()
+
+                  使用ajax方式
+                 $(form).ajaxSubmit() */
+                //  只验证不提交表单 验证时必备
+                debug: true
+
+            }
+
+
+
+        })
+    </script>
+
+
+</body>
+
+</html>

@@ -31,22 +31,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 
 
 // 引入模板引擎
-const expArtTemplate = require('express-art-template')
-    // 设置读取路径
+const expArtTemplate = require('express-art-template');
+const { nextTick } = require('process');
+// 设置读取路径
 const filepath = path.join(__dirname, 'views')
 app.engine('html', expArtTemplate)
 app.set('views', filepath)
 app.set('view engine', 'html')
 
 
-// 引入路由 参数一：路由规范，默认路由前缀 参数二
+
 app.use('/admin', require('./routers/admin'))
 
-app.use((req, res) => {
-    res.render('home/infoList')
-})
-
-// 设置404
-app.use((req, res) => {
+// 404
+app.use((req, res, next) => {
     res.render('home/404')
 })
